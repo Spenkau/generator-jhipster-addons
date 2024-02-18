@@ -1,10 +1,12 @@
 {
   "generator-jhipster": {
+    "additionalSubGenerators": "",
     "applicationType": "monolith",
     "authenticationType": "jwt",
     "baseName": "generatorJhipsterAddons",
     "buildTool": "maven",
     "cacheProvider": "no",
+    "cli": null,
     "clientFramework": "angular",
     "clientTestFrameworks": [],
     "clientTheme": "none",
@@ -18,9 +20,56 @@
     "enableTranslation": false,
     "entities": [],
     "feignClient": false,
+    "generators": {
+      "angular": {
+        "command": null,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "postPreparing",
+          "default",
+          "writing",
+          "multistepTransform",
+          "postWriting",
+          "transform",
+          "install",
+          "postInstall",
+          "end"
+        ],
+        "sbs": true,
+        "written": true
+      },
+      "server": {
+        "command": null,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "postPreparing",
+          "default",
+          "writing",
+          "multistepTransform",
+          "postWriting",
+          "transform",
+          "install",
+          "postInstall",
+          "end"
+        ],
+        "sbs": true,
+        "written": true
+      }
+    },
     "gradleEnterpriseHost": null,
     "jhipsterVersion": "8.1.0",
     "jwtSecretKey": "OTM0MGNmZmViMmY1YzJmZDM2NTUxZWU3ZDk1ZjU1NTg4OGU1MGJjYzUzMGRlZWQ0ZmY1ZDA0YTcwZDIzMjQzZTkyZDVjNGUyZmM2NWIzYmQ5ZjBkMzk1NGUyZjk5YzcwNTFmMjZhMmM5ZWNlZjQ0NmNkZTg5M2Y0NDUzMDkzMDQ=",
+    "localBlueprint": true,
     "messageBroker": false,
     "microfrontend": null,
     "microfrontends": [],
@@ -28,10 +77,12 @@
     "packageName": "com.mycompany.myapp",
     "prodDatabaseType": "postgresql",
     "reactive": false,
+    "sampleWritten": true,
     "searchEngine": false,
     "serverPort": null,
     "serverSideOptions": [],
     "serviceDiscoveryType": false,
+    "subGenerators": ["angular", "server"],
     "testFrameworks": [],
     "websocket": false,
     "withAdminUi": true
