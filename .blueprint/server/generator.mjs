@@ -1,108 +1,60 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import command from './command.mjs';
+import { writeFiles as writeEntityFiles } from './entity-files.mjs';
+import {
+  buildJavaGet as javaGetCall,
+  javaBeanCase as javaBeanClassNameFormat,
+  buildJavaGetter as javaGetter,
+  buildJavaSetter as javaSetter,
+  getJavaValueGeneratorForType as getJavaValueForType,
+  getPrimaryKeyValue as getPKValue,
+} from './support/index.mjs';
 
-export default class extends BaseApplicationGenerator {
-  constructor(args, opts, features) {
-    super(args, opts, { ...features, sbsBlueprint: true });
-  }
-
-  get [BaseApplicationGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async initializingTemplateTask() {
-        this.parseJHipsterArguments(command.arguments);
-        this.parseJHipsterOptions(command.options);
-      },
+export default class ServerGenerator extends BaseApplicationGenerator {
+  get writingEntities() {
+    return this.asWritingEntitiesTaskGroup({
+      ...writeEntityFiles(),
     });
   }
 
-  get [BaseApplicationGenerator.PROMPTING]() {
-    return this.asPromptingTaskGroup({
-      async promptingTemplateTask() {},
-    });
+  get [BaseApplicationGenerator.WRITING_ENTITIES]() {
+    return this.asWritingEntitiesTaskGroup(this.delegateTasksToBlueprint(() => this.writingEntities));
   }
 
-  get [BaseApplicationGenerator.CONFIGURING]() {
-    return this.asConfiguringTaskGroup({
-      async configuringTemplateTask() {},
-    });
+  getJavaValueGeneratorForType(type) {
+    return getJavaValueForType(type);
   }
-
-  get [BaseApplicationGenerator.COMPOSING]() {
-    return this.asComposingTaskGroup({
-      async composingTemplateTask() {},
-    });
+  /**
+   * @private
+   * Returns the primary key value based on the primary key type, DB and default value
+   *
+   * @param {string} primaryKey - the primary key type
+   * @param {string} databaseType - the database type
+   * @param {string} defaultValue - default value
+   * @returns {string} java primary key value
+   */
+  getPrimaryKeyValue(primaryKey, databaseType = this.jhipsterConfig.databaseType, defaultValue = 1) {
+    return getPKValue(primaryKey, databaseType, defaultValue);
   }
-
-  get [BaseApplicationGenerator.LOADING]() {
-    return this.asLoadingTaskGroup({
-      async loadingTemplateTask() {},
-    });
+  /**
+   * @private
+   * Convert to Java bean name case
+   *
+   * Handle the specific case when the second letter is capitalized
+   * See http://stackoverflow.com/questions/2948083/naming-convention-for-getters-setters-in-java
+   *
+   * @param {string} beanName name of the class to check
+   * @return {string}
+   */
+  javaBeanCase(beanName) {
+    return javaBeanClassNameFormat(beanName);
   }
-
-  get [BaseApplicationGenerator.PREPARING]() {
-    return this.asPreparingTaskGroup({
-      async preparingTemplateTask() {},
-    });
+  buildJavaGet(reference) {
+    return javaGetCall(reference);
   }
-
-  get [BaseApplicationGenerator.POST_PREPARING]() {
-    return this.asPostPreparingTaskGroup({
-      async postPreparingTemplateTask() {},
-    });
+  buildJavaGetter(reference, type = reference.type) {
+    return javaGetter(reference, type);
   }
-
-  get [BaseApplicationGenerator.DEFAULT]() {
-    return this.asDefaultTaskGroup({
-      async defaultTemplateTask() {},
-    });
-  }
-
-  get [BaseApplicationGenerator.WRITING]() {
-    return this.asWritingTaskGroup({
-      async writingTemplateTask({ application }) {
-        await this.writeFiles({
-          sections: {
-            files: [{ templates: ['template-file-server'] }],
-          },
-          context: application,
-        });
-      },
-    });
-  }
-
-  get [BaseApplicationGenerator.MULTISTEP_TRANSFORM]() {
-    return this.asMultistepTransformTaskGroup({
-      async multistepTransformTemplateTask() {},
-    });
-  }
-
-  get [BaseApplicationGenerator.POST_WRITING]() {
-    return this.asPostWritingTaskGroup({
-      async postWritingTemplateTask() {},
-    });
-  }
-
-  get [BaseApplicationGenerator.TRANSFORM]() {
-    return this.asTransformTaskGroup({
-      async transformTemplateTask() {},
-    });
-  }
-
-  get [BaseApplicationGenerator.INSTALL]() {
-    return this.asInstallTaskGroup({
-      async installTemplateTask() {},
-    });
-  }
-
-  get [BaseApplicationGenerator.POST_INSTALL]() {
-    return this.asPostInstallTaskGroup({
-      async postInstallTemplateTask() {},
-    });
-  }
-
-  get [BaseApplicationGenerator.END]() {
-    return this.asEndTaskGroup({
-      async endTemplateTask() {},
-    });
+  buildJavaSetter(reference, valueDefinition = `${reference.type} ${reference.name}`) {
+    return javaSetter(reference, valueDefinition);
   }
 }

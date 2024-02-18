@@ -16,4 +16,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default } from './generator.mjs';
+const SQL = 'sql';
+const MYSQL = 'mysql';
+const MARIADB = 'mariadb';
+const POSTGRESQL = 'postgresql';
+const MSSQL = 'mssql';
+const ORACLE = 'oracle';
+const H2_DISK = 'h2Disk';
+const H2_MEMORY = 'h2Memory';
+const databaseTypes = {
+  SQL,
+  MYSQL,
+  MARIADB,
+  POSTGRESQL,
+  MSSQL,
+  ORACLE,
+  MONGODB: 'mongodb',
+  CASSANDRA: 'cassandra',
+  COUCHBASE: 'couchbase',
+  NEO4J: 'neo4j',
+  H2_DISK,
+  H2_MEMORY,
+  NO: 'no',
+};
+databaseTypes.isSql = type => [SQL, MYSQL, POSTGRESQL, ORACLE, MARIADB, MSSQL, H2_DISK, H2_MEMORY].includes(type);
+export default databaseTypes;
