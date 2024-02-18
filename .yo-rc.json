@@ -18,7 +18,7 @@
     "enableHibernateCache": false,
     "enableSwaggerCodegen": false,
     "enableTranslation": false,
-    "entities": [],
+    "entities": ["Task", "Category"],
     "feignClient": false,
     "generators": {
       "angular": {
@@ -69,6 +69,7 @@
     "gradleEnterpriseHost": null,
     "jhipsterVersion": "8.1.0",
     "jwtSecretKey": "OTM0MGNmZmViMmY1YzJmZDM2NTUxZWU3ZDk1ZjU1NTg4OGU1MGJjYzUzMGRlZWQ0ZmY1ZDA0YTcwZDIzMjQzZTkyZDVjNGUyZmM2NWIzYmQ5ZjBkMzk1NGUyZjk5YzcwNTFmMjZhMmM5ZWNlZjQ0NmNkZTg5M2Y0NDUzMDkzMDQ=",
+    "lastLiquibaseTimestamp": 1708264815000,
     "localBlueprint": true,
     "messageBroker": false,
     "microfrontend": null,
