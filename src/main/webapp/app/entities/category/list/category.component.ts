@@ -49,6 +49,12 @@ export class CategoryComponent implements OnInit {
     this.load();
   }
 
+  copy(category: ICategory): void {
+    this.categoryService.copy(category).subscribe(res => {
+      console.log('using getName() return next result: ', res);
+    });
+  }
+
   delete(category: ICategory): void {
     const modalRef = this.modalService.open(CategoryDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.category = category;
